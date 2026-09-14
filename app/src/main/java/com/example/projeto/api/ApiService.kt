@@ -1,7 +1,10 @@
 package com.example.projeto.api
 
+import com.example.projeto.model.AuthResponse
 import com.example.projeto.model.LoginRequest
+import com.example.projeto.model.LoginResponse
 import com.example.projeto.model.RegisterRequest
+import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -12,13 +15,13 @@ interface ApiService {
     @POST("users/register")
     suspend fun register(
         @Body user: RegisterRequest
-    ): Response<Unit>
+    ): Response<AuthResponse>
 
     @POST("users/login")
     suspend fun login(
         @Body user: LoginRequest
-    ): Response<Unit>
+    ): Response<AuthResponse>
 
     @GET("products/announces")
-    suspend fun getAnnounces(): Response<Unit>
+    suspend fun getAnnounces(): Response<JsonObject>
 }
