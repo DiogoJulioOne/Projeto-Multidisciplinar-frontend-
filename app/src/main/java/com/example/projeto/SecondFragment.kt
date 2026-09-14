@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.example.projeto.api.RetrofitClient
+import androidx.navigation.fragment.findNavController
 import com.example.projeto.databinding.FragmentSecondBinding
-import com.example.projeto.model.RegisterRequest
-import kotlinx.coroutines.launch
 
 class SecondFragment : Fragment() {
 
@@ -22,74 +19,51 @@ class SecondFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+
+        _binding = FragmentSecondBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
+        // CRIAR CONTA
         binding.btnCadastrar.setOnClickListener {
 
             val nome = binding.edtNome.text.toString().trim()
-            val email = binding.edtEmailCadastro.text.toString().trim()
-            val senha = binding.edtSenhaCadastro.text.toString()
 
-            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+            if (nome.isEmpty()) {
+
                 Toast.makeText(
                     requireContext(),
-                    "Preencha todos os campos",
+                    "Digite seu nome",
                     Toast.LENGTH_SHORT
                 ).show()
 
                 return@setOnClickListener
             }
 
-            cadastrar(nome, email, senha)
+            Toast.makeText(
+                requireContext(),
+                "Conta criada com sucesso!",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            findNavController().navigate(
+                R.id.action_SecondFragment_to_ThirdFragment
+            )
         }
-    }
 
-    private fun cadastrar(
-        nome: String,
-        email: String,
-        senha: String
-    ) {
-        viewLifecycleOwner.lifecycleScope.launch {
+        // VOLTAR PARA LOGIN
+        binding.tvVoltarLogin.setOnClickListener {
 
-            try {
-                val usuario = RegisterRequest(
-                    name = nome,
-                    email = email,
-                    password = senha
-                )
-
-                val resposta = RetrofitClient.api.register(usuario)
-
-                if (resposta.isSuccessful) {
-
-                    Toast.makeText(
-                        requireContext(),
-                        "Cadastro realizado com sucesso!",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                } else {
-
-                    Toast.makeText(
-                        requireContext(),
-                        "Erro ao cadastrar: ${resposta.code()}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-            } catch (e: Exception) {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Erro de conexão com o servidor",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+            findNavController().navigate(
+                R.id.action_SecondFragment_to_FirstFragment
+            )
         }
     }
 

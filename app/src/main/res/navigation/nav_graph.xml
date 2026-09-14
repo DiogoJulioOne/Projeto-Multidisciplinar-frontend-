@@ -1,28 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/FirstFragment">
 
+
+    <!-- ========================= -->
+    <!-- LOGIN -->
+    <!-- ========================= -->
+
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.projeto.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Login"
         tools:layout="@layout/fragment_first">
 
+        <!-- Login → Cadastro -->
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+
+        <!-- Login → Perfil -->
+        <action
+            android:id="@+id/action_FirstFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
     </fragment>
+
+
+    <!-- ========================= -->
+    <!-- CADASTRO -->
+    <!-- ========================= -->
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.projeto.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="Cadastro"
         tools:layout="@layout/fragment_second">
 
+        <!-- Cadastro → Login -->
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+
+        <!-- Cadastro → Perfil -->
+        <action
+            android:id="@+id/action_SecondFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
     </fragment>
+
+
+    <!-- ========================= -->
+    <!-- PERFIL -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/ThirdFragment"
+        android:name="com.example.projeto.ThirdFragment"
+        android:label="Meu perfil"
+        tools:layout="@layout/fragment_third">
+
+        <!-- Perfil → Configurações -->
+        <action
+            android:id="@+id/action_ThirdFragment_to_NinthFragment"
+            app:destination="@id/NinthFragment" />
+
+        <!-- Perfil → Editar perfil -->
+        <action
+            android:id="@+id/action_ThirdFragment_to_TenthFragment"
+            app:destination="@id/TenthFragment" />
+
+        <!-- Perfil → Publicar material -->
+        <action
+            android:id="@+id/action_ThirdFragment_to_FourthFragment"
+            app:destination="@id/FourthFragment" />
+
+        <!-- Perfil → Buscar materiais -->
+        <action
+            android:id="@+id/action_ThirdFragment_to_FifthFragment"
+            app:destination="@id/FifthFragment" />
+
+        <!-- Perfil → Meus anúncios -->
+        <action
+            android:id="@+id/action_ThirdFragment_to_SixthFragment"
+            app:destination="@id/SixthFragment" />
+
+        <!-- Perfil → Meus matches -->
+        <action
+            android:id="@+id/action_ThirdFragment_to_SeventhFragment"
+            app:destination="@id/SeventhFragment" />
+
+    </fragment>
+
+
+    <!-- ========================= -->
+    <!-- PUBLICAR MATERIAL -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/FourthFragment"
+        android:name="com.example.projeto.FourthFragment"
+        android:label="Publicar material"
+        tools:layout="@layout/fragment_fourth">
+
+        <!-- Publicar → Perfil -->
+        <action
+            android:id="@+id/action_FourthFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
+        <!-- Publicar → Meus anúncios -->
+        <action
+            android:id="@+id/action_FourthFragment_to_SixthFragment"
+            app:destination="@id/SixthFragment" />
+
+    </fragment>
+
+
+    <!-- ========================= -->
+    <!-- BUSCAR MATERIAIS -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/FifthFragment"
+        android:name="com.example.projeto.FifthFragment"
+        android:label="Buscar materiais"
+        tools:layout="@layout/fragment_fifth">
+
+        <!-- Buscar → Perfil -->
+        <action
+            android:id="@+id/action_FifthFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
+    </fragment>
+
+
+    <!-- ========================= -->
+    <!-- MEUS ANÚNCIOS -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/SixthFragment"
+        android:name="com.example.projeto.SixthFragment"
+        android:label="Meus anúncios"
+        tools:layout="@layout/fragment_sixth">
+
+        <!-- Meus anúncios → Perfil -->
+        <action
+            android:id="@+id/action_SixthFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
+        <!-- Meus anúncios → Publicar material -->
+        <action
+            android:id="@+id/action_SixthFragment_to_FourthFragment"
+            app:destination="@id/FourthFragment" />
+
+    </fragment>
+
+
+    <!-- ========================= -->
+    <!-- MEUS MATCHES -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/SeventhFragment"
+        android:name="com.example.projeto.SeventhFragment"
+        android:label="Meus matches"
+        tools:layout="@layout/fragment_seventh">
+
+        <!-- Matches → Perfil -->
+        <action
+            android:id="@+id/action_SeventhFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
+    </fragment>
+
+
+    <!-- ========================= -->
+    <!-- CONFIGURAÇÕES -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/NinthFragment"
+        android:name="com.example.projeto.NinthFragment"
+        android:label="Configurações"
+        tools:layout="@layout/fragment_ninth">
+
+        <!-- Configurações → Perfil -->
+        <action
+            android:id="@+id/action_NinthFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
+        <!-- Configurações → Login -->
+        <action
+            android:id="@+id/action_NinthFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+
+    </fragment>
+
+
+    <!-- ========================= -->
+    <!-- EDITAR PERFIL -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/TenthFragment"
+        android:name="com.example.projeto.TenthFragment"
+        android:label="Editar perfil"
+        tools:layout="@layout/fragment_tenth">
+
+        <!-- Editar perfil → Perfil -->
+        <action
+            android:id="@+id/action_TenthFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment" />
+
+    </fragment>
+
 </navigation>

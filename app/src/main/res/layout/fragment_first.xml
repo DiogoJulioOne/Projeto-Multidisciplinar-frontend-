@@ -1,103 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7F2"
-    tools:context=".FirstFragment">
+    android:background="#E8F3EC">
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Bem-vindo! 🌱"
-        android:textColor="#2E7D32"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="30dp">
 
-    <!-- Subtítulo -->
-    <TextView
-        android:id="@+id/tvSubtitulo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
-        android:gravity="center"
-        android:text="Conecte-se com pessoas e compartilhe o que a natureza produz."
-        android:textColor="#555555"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65dp"
+            android:text="ReMatch ♻️"
+            android:textColor="#2E7D32"
+            android:textSize="36sp"
+            android:textStyle="bold"/>
 
-    <!-- Campo de e-mail -->
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="35dp"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitulo" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Economia circular começa com você."
+            android:textColor="#666666"
+            android:textSize="16sp"/>
 
-    <!-- Campo de senha -->
-    <EditText
-        android:id="@+id/edtSenha"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="35dp"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtEmail" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:text="Bem-vindo de volta!"
+            android:textColor="#222222"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
-    <!-- Botão entrar -->
-    <Button
-        android:id="@+id/btnEntrar"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="35dp"
-        android:text="ENTRAR"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtSenha" />
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="25dp"
+            android:background="#FFFFFF"
+            android:hint="E-mail"
+            android:textColorHint="#777777"
+            android:inputType="textEmailAddress"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#222222"
+            android:textSize="16sp" />
 
-    <!-- Cadastro -->
-    <TextView
-        android:id="@+id/tvCadastro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Ainda não possui uma conta? Cadastre-se"
-        android:textColor="#2E7D32"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnEntrar" />
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="12dp"
+            android:background="#FFFFFF"
+            android:hint="Senha"
+            android:textColorHint="#777777"
+            android:inputType="textPassword"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#222222"
+            android:textSize="16sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="25dp"
+            android:text="ENTRAR"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvCadastro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Ainda não possui uma conta? Cadastre-se"
+            android:textColor="#2E7D32"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</ScrollView>
