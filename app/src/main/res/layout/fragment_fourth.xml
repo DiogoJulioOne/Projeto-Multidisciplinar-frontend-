@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -42,18 +41,16 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"/>
 
-        <EditText
-            android:id="@+id/edtCategoria"
+        <!-- CATEGORIA -->
+
+        <Spinner
+            android:id="@+id/spinnerCategoria"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginTop="12dp"
             android:background="#FFFFFF"
-            android:hint="Categoria"
-            android:textColor="#222222"
-            android:textColorHint="#777777"
-            android:textSize="16sp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"/>
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
 
         <!-- FOTO -->
 
@@ -112,7 +109,8 @@
             android:textColorHint="#777777"
             android:textSize="16sp"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"/>
+            android:paddingEnd="16dp"
+            android:inputType="number"/>
 
         <EditText
             android:id="@+id/edtEstado"
@@ -121,19 +119,6 @@
             android:layout_marginTop="12dp"
             android:background="#FFFFFF"
             android:hint="Estado do material"
-            android:textColor="#222222"
-            android:textColorHint="#777777"
-            android:textSize="16sp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"/>
-
-        <EditText
-            android:id="@+id/edtFinalidade"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="12dp"
-            android:background="#FFFFFF"
-            android:hint="Finalidade de uso"
             android:textColor="#222222"
             android:textColorHint="#777777"
             android:textSize="16sp"
@@ -166,3 +151,4 @@
     </LinearLayout>
 
 </ScrollView>
+

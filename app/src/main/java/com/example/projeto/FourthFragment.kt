@@ -5,24 +5,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.projeto.api.RetrofitClient
 import com.example.projeto.databinding.FragmentFourthBinding
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class FourthFragment : Fragment() {
 
     private var _binding: FragmentFourthBinding? = null
     private val binding get() = _binding!!
 
-    // Selecionar foto da galeria
+    private var imagemSelecionada: Uri? = null
+
+    // ==========================================
+    // SELECIONAR FOTO
+    // ==========================================
+
     private val selecionarFoto =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri: Uri? ->
 
             if (uri != null) {
+
+                imagemSelecionada = uri
+
                 binding.imgMaterial.setImageURI(uri)
             }
         }
@@ -50,6 +67,41 @@ class FourthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // ==========================================
+        // CATEGORIAS
+        // ==========================================
+
+        val nomesCategorias = listOf(
+            "Eletrônicos",
+            "Móveis",
+            "Roupas",
+            "Alimentos",
+            "Materiais escolares",
+            "Outros"
+        )
+
+        val valoresCategorias = listOf(
+            "Eletronicos",
+            "Moveis",
+            "Roupas",
+            "Alimentos",
+            "MateriaisEscolares",
+            "Outros"
+        )
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            nomesCategorias
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        binding.spinnerCategoria.adapter = adapter
+
+
+        // ==========================================
         // SELECIONAR FOTO
         // ==========================================
 
@@ -60,17 +112,18 @@ class FourthFragment : Fragment() {
 
 
         // ==========================================
-        // PUBLICAR MATERIAL
+        // PUBLICAR
         // ==========================================
 
         binding.btnPublicar.setOnClickListener {
 
-            // Verifica se os campos principais foram preenchidos
             val material =
                 binding.edtMaterial.text.toString().trim()
 
             val categoria =
-                binding.edtCategoria.text.toString().trim()
+                valoresCategorias[
+                    binding.spinnerCategoria.selectedItemPosition
+                ]
 
             val descricao =
                 binding.edtDescricaoMaterial.text.toString().trim()
@@ -81,15 +134,12 @@ class FourthFragment : Fragment() {
             val estado =
                 binding.edtEstado.text.toString().trim()
 
-            val finalidade =
-                binding.edtFinalidade.text.toString().trim()
-
             val localizacao =
                 binding.edtLocalizacaoMaterial.text.toString().trim()
 
 
             // ==========================================
-            // VALIDAÇÃO
+            // VALIDAÇÕES
             // ==========================================
 
             if (material.isEmpty()) {
@@ -98,16 +148,6 @@ class FourthFragment : Fragment() {
                     "Digite o nome do material"
 
                 binding.edtMaterial.requestFocus()
-
-                return@setOnClickListener
-            }
-
-            if (categoria.isEmpty()) {
-
-                binding.edtCategoria.error =
-                    "Digite a categoria"
-
-                binding.edtCategoria.requestFocus()
 
                 return@setOnClickListener
             }
@@ -142,16 +182,6 @@ class FourthFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (finalidade.isEmpty()) {
-
-                binding.edtFinalidade.error =
-                    "Informe a finalidade"
-
-                binding.edtFinalidade.requestFocus()
-
-                return@setOnClickListener
-            }
-
             if (localizacao.isEmpty()) {
 
                 binding.edtLocalizacaoMaterial.error =
@@ -162,26 +192,173 @@ class FourthFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (imagemSelecionada == null) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Selecione uma imagem",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
 
             // ==========================================
-            // PUBLICAÇÃO
+            // ENVIAR PARA API
             // ==========================================
 
-            Toast.makeText(
-                requireContext(),
-                "Anúncio publicado com sucesso!",
-                Toast.LENGTH_SHORT
-            ).show()
+            viewLifecycleOwner.lifecycleScope.launch {
+
+                try {
+
+                    binding.btnPublicar.isEnabled = false
 
 
-            // ==========================================
-            // IR PARA MEUS ANÚNCIOS
-            // ==========================================
+                    // ==========================================
+                    // REQUEST BODIES
+                    // ==========================================
 
-            findNavController().navigate(
-                R.id.action_FourthFragment_to_SixthFragment
-            )
+                    val titleBody =
+                        material.toRequestBody(
+                            "text/plain".toMediaType()
+                        )
+
+                    val locationBody =
+                        localizacao.toRequestBody(
+                            "text/plain".toMediaType()
+                        )
+
+                    val descriptionBody =
+                        descricao.toRequestBody(
+                            "text/plain".toMediaType()
+                        )
+
+                    val stateBody =
+                        estado.toRequestBody(
+                            "text/plain".toMediaType()
+                        )
+
+                    val quantityBody =
+                        quantidade.toRequestBody(
+                            "text/plain".toMediaType()
+                        )
+
+                    val categoryBody =
+                        categoria.toRequestBody(
+                            "text/plain".toMediaType()
+                        )
+
+
+                    // ==========================================
+                    // IMAGEM
+                    // ==========================================
+
+                    val imagemPart =
+                        uriParaMultipart(
+                            imagemSelecionada!!
+                        )
+
+
+                    // ==========================================
+                    // REQUISIÇÃO
+                    // ==========================================
+
+                    val response =
+                        RetrofitClient.api.announceProduct(
+                            title = titleBody,
+                            location = locationBody,
+                            description = descriptionBody,
+                            state = stateBody,
+                            quantity = quantityBody,
+                            category = categoryBody,
+                            images = listOf(imagemPart)
+                        )
+
+
+                    // ==========================================
+                    // RESPOSTA
+                    // ==========================================
+
+                    if (response.isSuccessful) {
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Anúncio publicado com sucesso!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        findNavController().navigate(
+                            R.id.action_FourthFragment_to_SixthFragment
+                        )
+
+                    } else {
+
+                        binding.btnPublicar.isEnabled = true
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Erro ao publicar: ${response.code()}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                } catch (e: Exception) {
+
+                    binding.btnPublicar.isEnabled = true
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Erro: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
+    }
+
+
+    // ==========================================
+    // CONVERTER URI → MULTIPART
+    // ==========================================
+
+    private fun uriParaMultipart(
+        uri: Uri
+    ): MultipartBody.Part {
+
+        val inputStream =
+            requireContext()
+                .contentResolver
+                .openInputStream(uri)
+                ?: throw Exception(
+                    "Não foi possível abrir a imagem"
+                )
+
+        val arquivoTemporario =
+            File.createTempFile(
+                "imagem_",
+                ".jpg",
+                requireContext().cacheDir
+            )
+
+        inputStream.use { input ->
+
+            arquivoTemporario.outputStream().use { output ->
+
+                input.copyTo(output)
+            }
+        }
+
+        val requestBody =
+            arquivoTemporario.asRequestBody(
+                "image/*".toMediaType()
+            )
+
+        return MultipartBody.Part.createFormData(
+            "Images",
+            arquivoTemporario.name,
+            requestBody
+        )
     }
 
 

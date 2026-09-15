@@ -30,6 +30,20 @@
 
     </fragment>
 
+    <!-- ========================= -->
+    <!-- Produtos -->
+    <!-- ========================= -->
+
+    <fragment
+        android:id="@+id/ProductDetailFragment"
+        android:name="com.example.projeto.ProductDetailFragment"
+        android:label="Detalhes do produto">
+
+        <argument
+            android:name="produto"
+            app:argType="com.example.projeto.data.Product" />
+
+    </fragment>
 
     <!-- ========================= -->
     <!-- CADASTRO -->
@@ -134,6 +148,11 @@
         <action
             android:id="@+id/action_FifthFragment_to_ThirdFragment"
             app:destination="@id/ThirdFragment" />
+
+        <!-- Buscar → Detalhes do produto -->
+        <action
+            android:id="@+id/action_FifthFragment_to_ProductDetailFragment"
+            app:destination="@id/ProductDetailFragment" />
 
     </fragment>
 

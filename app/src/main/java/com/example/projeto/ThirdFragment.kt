@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.projeto.api.RetrofitClient
 import com.example.projeto.databinding.FragmentThirdBinding
+import kotlinx.coroutines.launch
 
 class ThirdFragment : Fragment() {
 
@@ -33,6 +37,9 @@ class ThirdFragment : Fragment() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Carrega os dados do usuário
+        carregarPerfil()
 
         // CONFIGURAÇÕES
         binding.btnConfiguracoes.setOnClickListener {
@@ -74,6 +81,65 @@ class ThirdFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_ThirdFragment_to_SeventhFragment
             )
+        }
+    }
+
+    private fun carregarPerfil() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            try {
+
+                val response = RetrofitClient.api.getProfile()
+
+                if (response.isSuccessful) {
+
+                    val user = response.body()
+
+                    if (user != null) {
+
+                        // Nome
+                        binding.tvNomeUsuario.text =
+                            user.name ?: "Usuário"
+
+                        // Saudação
+                        binding.tvSaudacao.text =
+                            "Olá, ${user.name ?: "usuário"}! 👋"
+
+                        // Localização
+                        binding.tvLocalizacao.text =
+                            if (!user.locale.isNullOrBlank()) {
+                                "📍 ${user.locale}"
+                            } else {
+                                "📍 Localização não informada"
+                            }
+
+                        // Descrição
+                        binding.tvDescricao.text =
+                            if (!user.bio.isNullOrBlank()) {
+                                user.bio
+                            } else {
+                                "Conte um pouco sobre você..."
+                            }
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Erro ao carregar perfil: ${response.code()}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+            } catch (e: Exception) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Erro ao carregar perfil: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
