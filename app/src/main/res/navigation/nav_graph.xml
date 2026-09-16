@@ -7,6 +7,12 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/FirstFragment">
 
+    <fragment
+    android:id="@+id/MessagesFragment"
+    android:name="com.example.projeto.MessagesFragment"
+    android:label="Mensagens"
+    tools:layout="@layout/fragment_messages" />
+
 
     <!-- ========================= -->
     <!-- LOGIN -->
